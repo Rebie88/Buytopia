@@ -1,0 +1,100 @@
+﻿@model Buytopia.Models.ViewModels.IndexViewModel
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+@*<br />
+<br />
+<br />*@
+
+<!--category list-->
+<ul id="menu-filters" class="menu-filter-list list-inline m-0" style="background-color:#232f3e; ">
+    <li class="active btn btn-dark ml-4 mr-1" data-filter=".menu-product"><i class="fa-solid fa-bars"></i>&nbsp;Show All</li>
+
+    @foreach (var item in Model.Category)
+    {
+        <li class="ml-1 mr-1" data-filter=".@item.Name.Replace(" ",string.Empty)">@item.Name</li>
+    }
+</ul>
+
+<!--Coupon carousle-->
+@if (Model.Coupon.ToList().Count > 0)
+{
+    <div style="height: 300px;">
+        <div class="carousel" data-ride="carousel" data-interval="2000">
+            @for (int i = 0; i < Model.Coupon.Count(); i++)
+            {
+                if (i == 0)
+                {
+                    <div class="carousel-item active">
+                        @{
+                            var base64 = Convert.ToBase64String(Model.Coupon.ToList()[i].Picture);
+                            var imgsrc = string.Format("data:image/jpg;base64,{0}", base64);
+                        }
+
+                        <img src="@imgsrc" height="300px" class="d-block w-100" />
+                    </div>
+                }
+                else
+                {
+                    <div class="carousel-item">
+                        @{
+                            var base64 = Convert.ToBase64String(Model.Coupon.ToList()[i].Picture);
+                            var imgsrc = string.Format("data:image/jpg;base64,{0}", base64);
+                        }
+
+                        <img src="@imgsrc" height="300px" class="d-block w-100" />
+                    </div>
+                }
+            }
+        </div>
+    </div>
+
+}
+
+<br />
+
+<!--randert the product-->
+
+    @foreach (var category in Model.Category)
+    {
+        <div id="menu-wrapper" class="container-fluid">
+            
+              <partial name="_LandingPagePartial" model="@Model.Product.Where(u=>u.Category.Name.Equals(category.Name))" />
+      
+        </div>
+    }
+
+
+
+@section Scripts{
+    <script src="https://code.jquery.com/jquery-3.3.1.js"
+            integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+            crossorigin="anonymous"></script>
+
+    <script>
+
+        var posts = $('.post');
+
+        (function ($) {
+
+            $("#menu-filters li").click(function () {
+                $("#menu-filters li").removeClass('active btn btn-secondary');
+                $(this).addClass('active btn btn-dark');
+
+                var selectedFilter = $(this).data("filter");
+
+                $(".menu-product").fadeOut();
+
+                setTimeout(function () {
+                    $(selectedFilter).slideDown();
+                }, 300);
+            });
+
+
+
+        })(jQuery);
+
+    </script>
+    }
+

@@ -1,0 +1,232 @@
+﻿@using Buytopia.Utility
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Buytopia</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="~/css/all.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <script src="https://cdn.tiny.cloud/1/952ynxuy9a5trgpmnpghgts7vx43s4tamdsiwzlzku0ga18c/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+</head>
+<body class="search-bg">
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm  navbar-dark" style="background-color: #131921;">
+            <div class="container-fluid">
+                <a class="navbar-brand" asp-area="Customer" asp-controller="Home" asp-action="Index">
+                    <img class="header__logo" src="~/images/logo2.png" alt="Buytopa-logo" asp-append-version="true">
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                    <ul class="navbar-nav flex-grow-1">
+                        @if (HttpContextAccessor.HttpContext.Session.GetInt32(SF.ssShoppingCartCount) != null)
+                        {
+                            <li style="color:white">
+                                <a asp-area="Customer" asp-controller="Cart" asp-action="Index" class="nav-link">
+                                    @{
+                                        var count = HttpContextAccessor.HttpContext.Session.GetInt32(SF.ssShoppingCartCount);
+                                    }
+                                    <i class="fas fa-shopping-cart"></i> &nbsp; (@count)
+                                </a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li style="color:white">
+                                <a href="#" class="nav-link">
+
+                                    <i class="fas fa-shopping-cart"></i> &nbsp; (0)
+                                </a>
+                            </li>
+                        }
+                    </ul>
+
+                    <partial name="_LoginPartial" />
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="Customer" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="Customer" asp-controller="Home" asp-action="Location">Location</a>
+                        </li>
+
+                        @if (User.IsInRole(SF.ManagerUser))
+                        {
+                            <li class="nav-item dropdown text-white-50">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropDownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Admin Panel
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropDownMenuLink" style="background-color:deepskyblue">
+                                    <a class="dropdown-item" asp-action="Index" asp-controller="Category" asp-area="Admin">Category</a>
+                                    <a class="dropdown-item" asp-action="Index" asp-controller="SubCategory" asp-area="Admin">Sub Category</a>
+                                    <a class="dropdown-item" asp-action="Index" asp-controller="Product" asp-area="Admin">Product</a>
+                                    <a class="dropdown-item" asp-action="Index" asp-controller="Coupon" asp-area="Admin">Coupon</a>
+
+                                    <a class="dropdown-item" asp-action="Index" asp-controller="User" asp-area="Admin">Users</a>
+
+                                </div>
+                            </li>
+                        }
+                        @if (User.IsInRole(SF.ManagerUser) || User.IsInRole(SF.CustomerEndUser) || User.IsInRole(SF.EmployeeUser))
+                        {
+                            <li class="nav-item">
+                                <a asp-area="Customer" asp-controller="Order" asp-action="OrderHistory" class="nav-link">
+                                    Orders
+                                </a>
+                            </li>
+                        }
+                        @if (User.IsInRole(SF.ManagerUser))
+                        {
+                            <li class="nav-item dropdown text-white-50">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Manage Order
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropDownMenuLink">
+
+                                    <a class="dropdown-item" asp-action="ManageOrder" asp-controller="Order" asp-area="Customer">Manage Order</a>
+                                    <a class="dropdown-item" asp-action="OrderDelivery" asp-controller="Order" asp-area="Customer">Order Delivery</a>
+
+                                </div>
+
+                            </li>
+                        }
+                        <li class="nav-item x">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Search Buytopia">
+                                <div class="input-group-append">
+                                    <button class="btn btn-secondary" style="background-color:#febd69" type="button">
+                                        <i class="fa fa-search" style="color: #333333;"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+ 
+    <!-- Footer section stats here -->
+    <!-- Back to Top -->
+    <a id="back-to-top"
+       class="rounded-circle"
+       data-bs-toggle="tooltip"
+       title="Back to Top"
+       >
+        <i class="fa fa-chevron-up"></i>
+    </a>
+  
+    <section class="footer-wrapper pt-4 pb-5">
+        <div class="container">
+            <div class="footer-links-wrapper row">
+                <div class="links-wrapper-1 col-sm-12 col-md">
+                    <h3 class="text-white font-weight-bold"> Get to Know Us</h3>
+                    <ul>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Buytopia Newsletter</a></li>
+                        <li><a href="#">About Buytopia</a></li>
+                        <li><a href="#">Investor Relations</a></li>
+                        
+                    </ul>
+                    <h3 class="text-white font-weight-bold">Account</h3>
+                    <ul>
+                        <li><a href="#">Manage Your Buytopia Account</a></li>
+                        <li><a href="#">Buytopia Store Account</a></li>
+
+                    </ul>
+                </div>
+                <div class="links-wrapper-2 col-sm-12 col-md">
+                    <h3 class="text-white font-weight-bold">
+                        Make Money with Us</h3>
+                    <ul>
+                        <li><a href="#">Sell products on Buytopia</a></li>
+                        <li><a href="#">Supply to Buytopia</a></li>
+                        <li><a href="#">Become an Affiliate</a></li>
+                        <li><a href="#">Become a Delivery Driver</a></li>
+                        <li><a href="#">Advertise Your Products</a></li>
+                        
+                    </ul>
+                    
+                </div>
+                <div class="links-wrapper-3 col-sm-12 col-md">
+                    <h3 class="text-white font-weight-bold">Buytopia Store</h3>
+                    <ul>
+                        <li><a href="#">Find a Store</a></li>
+                        <li><a href="#">Financing</a></li>
+                        <li><a href="#">Order Status</a></li>
+                        <li><a href="#">Shopping Help</a></li>
+                    </ul>
+                    <h3 class="text-white font-weight-bold">For Business</h3>
+                    <ul>
+                        <li><a href="#">Buytopia and Business</a></li>
+                        <li><a href="#">Shop for Business</a></li>
+                    </ul>
+                </div>
+                <div class="links-wrapper-4 col-sm-12 col-md">
+                    <h3 class="text-white font-weight-bold">Contact us </h3>
+                    <ul>
+                        <li><a href="#">Support</a></li>
+                        <li><a href="#">Returns & Replacements</a></li>
+                        
+                    </ul>
+                    <h3 class="text-white font-weight-bold">For Government</h3>
+                    <ul>
+                        <li><a href="#">Buytopia and Education</a></li>
+                        <li><a href="#">Shop for College</a></li>
+                    </ul>
+                </div>
+                
+            </div>
+            <div class="my-apple-wrapper mb-4">
+                More ways to shop: <a href="#">Find an Buytopia Store</a> or
+                <a href="#">other retailer</a> near you. Or call 1-800-MY-Buytopia.
+            </div>
+        </div>  
+    </section>
+    <footer class="footer text-white text-center pt-3" style="background-color: #131a22;font-size: 14px;">
+        <div class="container copyright-wrapper row pl-lg-5">
+            <div class="copyright col-sm-12 order-2 col-md-8 order-md-1 col-lg-4 order-lg-1">
+                Copyright &copy; 2023 Rebie Seid. All rights reserved.
+            </div>
+            <div class="footer-links-terms col-sm-12 order-3 col-lg-6 order-lg-2">
+                <ul >
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Use</a></li>
+                    <li><a href="#">Legal</a></li>
+                </ul>
+            </div>
+            <div class="footer-country col-sm-12 order-1 col-md-4 order-md-2 text-md-right col-lg-2 order-lg-3">
+                <div class="flag-wrapper"><img src="~/images/16.png" /></div>
+                <div class="footer-country-name">United States</div>
+            </div>
+        </div>
+    </footer>
+   
+    
+    <script src="https://static.elfsight.com/platform/platform.js" data-use-service-core defer></script>
+    <div class="elfsight-app-55bbf50e-deb4-4155-af99-dd30749adca0"></div>
+    <script src="https://cdn.tiny.cloud/1/952ynxuy9a5trgpmnpghgts7vx43s4tamdsiwzlzku0ga18c/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/script.js" asp-append-version="true"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

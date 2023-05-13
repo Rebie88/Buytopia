@@ -1,0 +1,80 @@
+﻿@{
+    ViewData["Title"] = "Our Location";
+}
+
+
+<br />
+<br />
+<br />
+<br />
+<section id="contact" class="section bg-light" style="position: relative;
+  padding: 4.5rem 0;
+  overflow: hidden;">
+    <div class="container">
+        <!-- Heading -->
+        <div class="position-relative d-flex text-center mb-5">
+            <h2 class="text-24 text-light opacity-4 text-uppercase fw-600 w-100 mb-0">
+                Contact
+            </h2>
+            <p class="text-9 text-dark fw-600 position-absolute w-100 align-self-center lh-base mb-0">
+                Get in Touch<span class="heading-separator-line border-bottom border-3 border-primary d-block mx-auto"></span>
+            </p>
+        </div>
+        <!-- Heading end-->
+        <div class="row gy-5">
+            <div class="col-md-4 col-xl-3 order-1 order-md-0 text-center text-md-start">
+                <h2 class="mb-3 text-5 text-uppercase">Our Store Location</h2>
+                <p class="text-3 mb-4"> 3000 NE 4th St. </p>
+                <p class="text-3 mb-4"> Renton, WA 98056</p>
+                <p class="text-3 mb-1">
+                    <span class="text-primary text-4 me-2"><i class="fas fa-phone"></i></span>(206) 460 8363
+                </p>
+
+                <p class="text-3 mb-4">
+                    <span class="text-primary text-4 me-2"><i class="fas fa-envelope"></i></span>rseid888@yahoo.com
+                </p>
+                
+            </div>
+            <div class="col-md-8 col-xl-9 order-0 order-md-1">
+                <h2 class="mb-3 text-5 text-uppercase text-center text-md-start">
+                    Send Us a Message
+                </h2>
+                <form id="contact-form" action="php/mail.php" method="post">
+                    <div class="row g-4">
+                        <div class="col-xl-6">
+                            <input name="name"
+                                   type="text"
+                                   class="form-control"
+                                   required
+                                   placeholder="Name" />
+                        </div>
+                        <div class="col-xl-6">
+                            <input name="email"
+                                   type="email"
+                                   class="form-control"
+                                   required
+                                   placeholder="Email" />
+                        </div>
+                        <div class="col">
+                            <textarea name="form-message"
+                                      class="form-control"
+                                      rows="5"
+                                      required
+                                      placeholder="Tell us more about your needs........"></textarea>
+                        </div>
+                    </div>
+
+                    <p class="text-center mt-4 mb-0">
+                        <button id="submit-btn"
+                                class="btn btn-success rounded-pill d-inline-flex"
+                                type="submit">
+                            Send Message
+                        </button>
+                    </p>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+

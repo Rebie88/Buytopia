@@ -1,0 +1,146 @@
+﻿@model Buytopia.Models.ViewModels.OrderDetailsCart
+@using Microsoft.Extensions.Options
+@inject IOptions<Buytopia.Utility.StripeSettings> Stripe
+@{
+    ViewData["Title"] = "OrderSummary";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>OrderSummary</h1>
+
+<form method="post">
+    @if (Model.listCart.Count > 0)
+    {
+        <br />
+        <input id="userId" asp-for="@Model.listCart[0].ApplicationUserId" hidden />
+        <div class="bgWhiteBorder">
+            <div class="container">
+                <div class="card">
+                    <div class="card-header bg-dark text-light ml-0 row container">
+                        <div class="col-6">
+                           
+                           Your Order Summary
+                        </div>
+                        <div class="col-6 text-right">
+                            <a asp-area="Customer" asp-controller="Cart" asp-action="Index" class="btn btn-outline-info btn-sm">Back to Cart</a>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="container rounded p-2">
+                            <div class="row">
+                                <div class="col-12 col-lg-6 pb-4">
+                                    <div class="row">
+                                        <h4 class="d-flex justify-content-between align-items-center mb-3">
+                                            <span class="text-info"> Delivery Details:</span>
+                                        </h4>
+                                    </div>
+                                    <div class="row my-1">
+                                        <div class="col-3">
+                                            <label>Delivery Address</label>
+                                        </div>
+                                        <div class="col-9">
+                                            <input asp-for="@Model.OrderHeader.DeliveryAddress" id="DeliveryAddress" type="text" class="form-control" />
+                                        </div>
+                                    </div>
+                                    <div class="row my-1">
+                                        <div class="col-3">
+                                            <label>Additional Instructions: </label>
+                                        </div>
+                                        <div class="col-9">
+                                            <textarea asp-for="@Model.OrderHeader.Comments" style="height:100px;" class="form-control"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-lg-5 offset-lg-1">
+                                    <h4 class="d-flex justify-content-between align-items-center mb-3">
+                                        <span class="text-info">Order Summary:</span>
+                                    </h4>
+                                    <ul class="list-group mb-3">
+                                        @{
+                                            var total = 0.0;
+                                        }
+
+                                        @foreach (var details in Model.listCart)
+                                        {
+                                            <li class="list-group-item d-flex justify-content-between">
+                                                <div>
+                                                    <h6 class="my-0">@details.Product.Name</h6>
+                                                    <small class="text-muted">Quantity: @details.Count</small>
+                                                </div>
+                                                <span class="text-muted">$@(details.Product.Price * details.Count)</span>
+                                                @{
+                                                    total += (details.Product.Price * details.Count);
+                                                }
+                                            </li>
+                                        }
+                                        @if (Model.OrderHeader.CouponCode != null)
+                                        {
+                                            <li class="list-group-item d-flex justify-content-between">
+                                                <div class="text-success">
+                                                    <h6 class="my-0">Promo Code</h6>
+                                                    <small class="text-success">@Model.OrderHeader.CouponCode</small>
+                                                </div>
+                                                <span class="text-success">-$@(total - Model.OrderHeader.OrderTotal)</span>
+                                            </li>
+                                        }
+                                        <li class="list-group-item d-flex justify-content-between bg-light">
+                                            <small class="text-info">Total (USD)</small>
+                                            <strong class="text-info">$@(Model.OrderHeader.OrderTotal)</strong>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="row">
+                            <div class="col-12 col-md-4 offset-md-8">
+
+                                @{
+                                    var OrderTotalForStrip = Model.OrderHeader.OrderTotal * 100;
+                                }
+                                <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                                        data-key="@Stripe.Value.PublishableKey"
+                                        data-amount="@OrderTotalForStrip"
+                                        data-name="Payment details"
+                                        data-label="Proceed to checkout"
+                                        data-locale="auto"
+                                        data-allow-remember-me="false">
+                                </script>
+                                <script>
+                                    document.getElementsByClassName("stripe-button-el")[0].style.display = 'none';
+                                </script>
+                                <button type="submit" id="btnPlaceOrder" onclick="return validateInput()" value="Place Order" class="btn btn-success form-control">Proceed to checkout</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="bgWhiteBorder"> No items added to the shopping cart...</div>
+    }
+</form>
+
+@section Scripts{
+    <script>
+        function validateInput() {
+
+            var Address = document.getElementById("DeliveryAddress").value;
+
+
+            if (Address.toString().length == 0) {
+                alert("Please Enter Delivery Address")
+                return false;
+            }
+            else 
+            {
+                return true;
+            }
+        }
+
+    </script>
+}

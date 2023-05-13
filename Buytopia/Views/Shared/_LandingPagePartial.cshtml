@@ -1,0 +1,51 @@
+﻿
+@model IEnumerable<Product>
+
+   
+
+
+    @if (Model.Count() > 0)
+    {
+        <div class="post @Model.FirstOrDefault().Category.Name.Replace(" ",string.Empty) menu-product">
+      @* <div >
+            <h3 class="text-success"> @Model.FirstOrDefault().Category.Name </h3>
+        </div>*@
+        <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-md-4 col-xs-6 border-primary mb-3">
+                <div class="card mb-3 p-4" style="max-width: 540px;">
+                    <div class="row g-0">
+                        <div class="col-md-6">
+                            <img src="@item.Image" width="100%" />
+                            
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card-body">
+                                <p class="card-text">@Html.Raw(item.Description)</p>
+                                    <p class="card-text product__rating"><strong> @item.Ratings</strong> </p>
+                                    <p class="card-text">
+                                        <small>$</small>
+                                        <strong>@item.Price</strong>
+                                    </p>
+                               
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                           
+                            <p class="card-text">
+                                <a class="btn btn-outline-success float-right" asp-action="Details" asp-route-id="@item.Id">
+                                    Details
+                                </a>
+                            </p>
+                           
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        </div>
+        </div>
+    }
+
+

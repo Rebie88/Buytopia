@@ -1,0 +1,88 @@
+﻿@model Buytopia.Models.ViewModels.ProductItemViewModel
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<br />
+<br />
+<br />
+<br />
+<br />
+<div class="container">
+<h2>Delete Product</h2>
+<br />
+<form method="post">
+    <div class="bgWhite row">
+        <div class="col-8">
+            <input type="hidden" asp-for="Product.Id" />
+            <fieldset disabled>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="Product.Name" class="custom-label"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="Product.Name" class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="Product.Description" class="custom-label"></label>
+                    </div>
+                    <div class="col-8">
+                        @Html.TextAreaFor(m => m.Product.Description)
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="Product.Price" class="custom-label"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="Product.Price" class="form-control" />
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="Product.CategoryId" class="custom-label"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="Product.Category.Name" class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="Product.SubCategoryId" class="custom-label"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="Product.SubCategory.Name" class="form-control" />
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+        <div class="col-1"></div>
+        <div class="col-3">
+            <img src="@Model.Product.Image" width="100%" style="border-radius:5px;border:1px solid #bbb9b9;" />
+        </div>
+        <div class="col-8">
+            <div class="col-8 offset-4">
+                <partial name="_DeleteAndBackToListButton" model="Model.Product.Id" />
+            </div>
+        </div>
+    </div>
+</form>
+</div>
+@section Scripts{
+    <script>
+        tinymce.init({
+            selector: 'textarea',
+            plugins: "lists",
+            toolbar: "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist",
+            menubar: 'file edit format',
+            readonly: 1
+        });</script>
+    <script>tinymce.init({ selector: 'textarea' });</script>
+
+}
+
