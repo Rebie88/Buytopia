@@ -40,8 +40,12 @@
                         else
                         {
                             <li style="color:white">
-                                <a href="#" class="nav-link">
+                               @* <a href="#" class="nav-link">
 
+                                    <i class="fas fa-shopping-cart"></i> &nbsp; (0)
+                                </a>*@
+                                <a asp-area="Customer" asp-controller="Cart" asp-action="ZroCart" class="nav-link">
+                                  
                                     <i class="fas fa-shopping-cart"></i> &nbsp; (0)
                                 </a>
                             </li>
@@ -52,10 +56,6 @@
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
                             <a class="nav-link" asp-area="Customer" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="Customer" asp-controller="Home" asp-action="Location">Location</a>
                         </li>
 
                         @if (User.IsInRole(SF.ManagerUser))
@@ -75,14 +75,13 @@
                                 </div>
                             </li>
                         }
-                        @if (User.IsInRole(SF.ManagerUser) || User.IsInRole(SF.CustomerEndUser) || User.IsInRole(SF.EmployeeUser))
-                        {
+                        
                             <li class="nav-item">
                                 <a asp-area="Customer" asp-controller="Order" asp-action="OrderHistory" class="nav-link">
                                     Orders
                                 </a>
                             </li>
-                        }
+                        
                         @if (User.IsInRole(SF.ManagerUser))
                         {
                             <li class="nav-item dropdown text-white-50">
@@ -98,15 +97,17 @@
 
                             </li>
                         }
-                        <li class="nav-item x">
-                            <div class="input-group">
-                                <input type="text" class="form-control" placeholder="Search Buytopia">
+                    
+
+
+                        <li class="nav-item">
+
+                            <form class="input-group" asp-controller="Home" asp-action="Filter" style="padding-right: 25px;">
+                                <input name="searchString" type="text" class="form-control" placeholder="Search Buytopia..." aria-label="Recipient's username" aria-describedby="button-addon2">
                                 <div class="input-group-append">
-                                    <button class="btn btn-secondary" style="background-color:#febd69" type="button">
-                                        <i class="fa fa-search" style="color: #333333;"></i>
-                                    </button>
+                                <button class="btn btn-secondary" style="background-color:#febd69" type="submit"><i class="fa fa-search" style="color: #333333;"></i></button>
                                 </div>
-                            </div>
+                            </form>
 
                         </li>
                     </ul>
@@ -115,8 +116,8 @@
         </nav>
     </header>
 
-    <div class="">
-        <main role="main" class="pb-3">
+    <div>
+        <main role="main" class="pb-0">
             @RenderBody()
         </main>
     </div>
@@ -132,7 +133,7 @@
         <i class="fa fa-chevron-up"></i>
     </a>
   
-    <section class="footer-wrapper pt-4 pb-5">
+   <section class="footer-wrapper pt-4 pb-5 mb-0 mt-0">
         <div class="container">
             <div class="footer-links-wrapper row">
                 <div class="links-wrapper-1 col-sm-12 col-md">
@@ -167,10 +168,9 @@
                 <div class="links-wrapper-3 col-sm-12 col-md">
                     <h3 class="text-white font-weight-bold">Buytopia Store</h3>
                     <ul>
-                        <li><a href="#">Find a Store</a></li>
+                        <li><a asp-area="Customer" asp-controller="Home" asp-action="Location">Find a Store</a></li>
                         <li><a href="#">Financing</a></li>
-                        <li><a href="#">Order Status</a></li>
-                        <li><a href="#">Shopping Help</a></li>
+                        <li><a asp-area="Customer" asp-controller="Order" asp-action="OrderHistory">Order Status</a></li>
                     </ul>
                     <h3 class="text-white font-weight-bold">For Business</h3>
                     <ul>
@@ -181,8 +181,8 @@
                 <div class="links-wrapper-4 col-sm-12 col-md">
                     <h3 class="text-white font-weight-bold">Contact us </h3>
                     <ul>
-                        <li><a href="#">Support</a></li>
-                        <li><a href="#">Returns & Replacements</a></li>
+                        <li><a asp-area="Customer" asp-controller="Home" asp-action="Location">Support</a></li>
+                        <li><a asp-area="Customer" asp-controller="Home" asp-action="ReturnsRefundsPolicy">Returns & Replacements</a></li>
                         
                     </ul>
                     <h3 class="text-white font-weight-bold">For Government</h3>
@@ -199,7 +199,7 @@
             </div>
         </div>  
     </section>
-    <footer class="footer text-white text-center pt-3" style="background-color: #131a22;font-size: 14px;">
+    <footer class="footer text-white text-center pt-3 mb-0" style="background-color: #131a22;font-size: 14px;">
         <div class="container copyright-wrapper row pl-lg-5">
             <div class="copyright col-sm-12 order-2 col-md-8 order-md-1 col-lg-4 order-lg-1">
                 Copyright &copy; 2023 Rebie Seid. All rights reserved.
@@ -217,10 +217,20 @@
             </div>
         </div>
     </footer>
-   
     
-    <script src="https://static.elfsight.com/platform/platform.js" data-use-service-core defer></script>
-    <div class="elfsight-app-55bbf50e-deb4-4155-af99-dd30749adca0"></div>
+    <script>
+        window.chatbaseConfig = {
+            chatbotId: "qtr4RVOYIzb0D8ZDj4Hx4",
+        }
+    </script>
+    <script src="https://www.chatbase.co/embed.min.js"
+            id="qtr4RVOYIzb0D8ZDj4Hx4"
+            defer>
+    </script>
+    
+    @*<script src="https://static.elfsight.com/platform/platform.js" data-use-service-core defer></script>
+    <div class="elfsight-app-55bbf50e-deb4-4155-af99-dd30749adca0"></div>*@
+
     <script src="https://cdn.tiny.cloud/1/952ynxuy9a5trgpmnpghgts7vx43s4tamdsiwzlzku0ga18c/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

@@ -3,9 +3,9 @@
 @{
     ViewData["Title"] = "Home Page";
 }
-@*<br />
-<br />
-<br />*@
+
+
+
 
 <!--category list-->
 <ul id="menu-filters" class="menu-filter-list list-inline m-0" style="background-color:#232f3e; ">
@@ -20,7 +20,7 @@
 <!--Coupon carousle-->
 @if (Model.Coupon.ToList().Count > 0)
 {
-    <div style="height: 300px;">
+    <div class="baner">
         <div class="carousel" data-ride="carousel" data-interval="2000">
             @for (int i = 0; i < Model.Coupon.Count(); i++)
             {
@@ -32,7 +32,7 @@
                             var imgsrc = string.Format("data:image/jpg;base64,{0}", base64);
                         }
 
-                        <img src="@imgsrc" height="300px" class="d-block w-100" />
+                        <img src="@imgsrc" class="d-block w-100 baner" />
                     </div>
                 }
                 else
@@ -43,7 +43,7 @@
                             var imgsrc = string.Format("data:image/jpg;base64,{0}", base64);
                         }
 
-                        <img src="@imgsrc" height="300px" class="d-block w-100" />
+                        <img src="@imgsrc" class="d-block w-100 baner" />
                     </div>
                 }
             }

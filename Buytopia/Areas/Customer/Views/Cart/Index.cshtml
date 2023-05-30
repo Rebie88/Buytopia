@@ -3,8 +3,6 @@
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<br />
-<br />
 <br/>
 <form method="post">
     @if (Model.listCart.Count > 0)
@@ -99,7 +97,16 @@
     }
     else
     {
-        <div class="bgWhiteBorder container"> Your Buytopia Cart is empty...</div>
+        <div class="bgWhiteBorder container">
+            <div class="row px-3">
+                <div class="col-8">
+                    <h2>Your Buytopia Cart is empty</h2>
+                </div>
+                <div class="col-4 text-right">
+                    <a asp-action="Index" asp-controller="Home" class="btn btn-success form-control">Shop today's deals</a>
+                </div>
+            </div>
+        </div>
     }
 </form>
 

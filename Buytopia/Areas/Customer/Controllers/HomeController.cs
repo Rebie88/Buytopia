@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Stripe;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -108,6 +109,48 @@ namespace Buytopia.Controllers
         public IActionResult Location()
         {
             return View();
+        }
+        public IActionResult ReturnsRefundsPolicy()
+        {
+            return View();
+        }
+        //search
+        public List<Models.Product> Products { get; set; }
+
+        public async Task<IActionResult> Filter(string searchString)
+        {
+
+
+            IndexViewModel IndexVM = new IndexViewModel()
+            {
+                Product = await _db.Product.Include(m => m.Category).Include(m => m.SubCategory).ToListAsync(),
+                Category = await _db.Category.ToListAsync(),
+                Coupon = await _db.Coupon.Where(c => c.IsActive == true).ToListAsync()
+            };
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                IndexViewModel fIndexVM = new IndexViewModel()
+                {
+                   
+                    Product = await _db.Product.Include(m => m.Category).Include(m => m.SubCategory).Where(n => n.Name.ToLower().Contains(searchString.ToLower()) || n.Description.ToLower().Contains(searchString.ToLower())).ToListAsync(),
+                    Category = await _db.Category.ToListAsync(),
+                    Coupon = await _db.Coupon.Where(c => c.IsActive == true).ToListAsync()
+                };
+                // If no products matched the search string, return a "NoProductsFound" view
+                if (!fIndexVM.Product.Any())
+                {
+                    return View("NoProductsFound");
+                }
+                return View("Filter", fIndexVM);
+            }
+
+
+
+            return View(IndexVM);
+
+
+            
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

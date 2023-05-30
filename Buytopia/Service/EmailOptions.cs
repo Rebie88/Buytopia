@@ -1,4 +1,4 @@
-﻿namespace Buytopia.Services
+﻿namespace Buytopia.Service
 {
     public class EmailOptions
     {

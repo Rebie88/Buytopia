@@ -4,22 +4,23 @@
   
     @if (Model == SF.StatusSubmitted)
     {
-        <p class="text-success">Your order will delivered in 5 days</p>
+        <h3 class="text-success">Order placed, thanks!</h3>
+        <p>Confirmation will be sent to your email.</p>
         <img src="~/images/OrderPlaced.png" width="100%" />
     }
     @if (Model == SF.StatusInProcess)
     {
-        <p class="text-success">Your order is Sheeped will delivered soon</p>
+        <h3 class="text-success">Your order is Shipped will delivered soon</h3>
         <img src="~/images/Shipped.png" width="100%" />
     }
     @if (Model == SF.StatusShipped)
     {
-        <p class="text-success">Your order is out for delivery arives soon</p>
+        <h3 class="text-success">Your order is out for delivery arives soon</h3>
         <img src="~/images/OutForDelivery.png" width="100%" />
     }
     @if (Model == SF.StatusDelivered)
     {
-        <p class="text-success">Your order is delivered</p>
+        <h3 class="text-success">Your order is delivered</h3>
         <img src="~/images/Deliverd.png" width="100%" />
     }
 </div>

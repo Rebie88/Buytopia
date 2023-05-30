@@ -7,7 +7,7 @@ using SendGrid.Helpers.Mail;
 using System.Threading.Tasks;
 using System;
 
-namespace Buytopia.Services
+namespace Buytopia.Service
 {
     public class EmailSender : IEmailSender
     {
@@ -28,7 +28,7 @@ namespace Buytopia.Services
             var client = new SendGridClient(sendGridKey);
             var msg = new SendGridMessage()
             {
-                From = new EmailAddress("admin@buytopia.com", "Buytopia Store"),
+                From = new EmailAddress("rseid888@gmail.com", "Buytopia Store"),
                 Subject = subject,
                 PlainTextContent = message,
                 HtmlContent = message

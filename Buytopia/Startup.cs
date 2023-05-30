@@ -1,5 +1,5 @@
 using Buytopia.Data;
-using Buytopia.Services;
+using Buytopia.Service;
 using Buytopia.Utility;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -37,8 +37,14 @@ namespace Buytopia
             services.AddIdentity<IdentityUser, IdentityRole>()
                 .AddDefaultTokenProviders()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+            //add dbinitalizer
+            services.AddScoped<IDbInitializer, DbInitializer>();
             services.Configure<StripeSettings>(Configuration.GetSection("Stripe"));
+
+            
+
             services.AddSingleton<IEmailSender,EmailSender>();
+            services.Configure<EmailOptions>(Configuration);
             services.AddControllersWithViews();
             services.AddRazorPages().AddRazorRuntimeCompilation();
 
@@ -75,7 +81,7 @@ namespace Buytopia
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IDbInitializer dbInitializer)
         {
             if (env.IsDevelopment())
             {
@@ -89,7 +95,9 @@ namespace Buytopia
                 app.UseHsts();
             }
 
+
             StripeConfiguration.ApiKey = Configuration.GetSection("Stripe")["SecretKey"];
+            dbInitializer.Initialize();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 

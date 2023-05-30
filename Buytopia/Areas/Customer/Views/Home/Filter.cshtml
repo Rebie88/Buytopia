@@ -1,0 +1,53 @@
+﻿@model Buytopia.Models.ViewModels.IndexViewModel
+
+@{
+    ViewData["Title"] = "Selected item";
+}
+
+
+
+<br />
+
+<!--randert the product-->
+@foreach (var category in Model.Category)
+{
+    <div id="menu-wrapper" class="container-fluid">
+
+        <partial name="_LandingPagePartial" model="@Model.Product.Where(u=>u.Category.Name.Equals(category.Name))" />
+
+    </div>
+}
+
+
+
+@section Scripts{
+    <script src="https://code.jquery.com/jquery-3.3.1.js"
+            integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+            crossorigin="anonymous"></script>
+
+    <script>
+
+        var posts = $('.post');
+
+        (function ($) {
+
+            $("#menu-filters li").click(function () {
+                $("#menu-filters li").removeClass('active btn btn-secondary');
+                $(this).addClass('active btn btn-dark');
+
+                var selectedFilter = $(this).data("filter");
+
+                $(".menu-product").fadeOut();
+
+                setTimeout(function () {
+                    $(selectedFilter).slideDown();
+                }, 300);
+            });
+
+
+
+        })(jQuery);
+
+    </script>
+    }
+

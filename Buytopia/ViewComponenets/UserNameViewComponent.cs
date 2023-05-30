@@ -21,7 +21,7 @@ namespace Buytopia.ViewComponenets
             //find out the user who is signed in
             var claimsIdentity = (ClaimsIdentity)User.Identity;
             var claims = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
-
+            //get the user information from database
             var userFromDb = await _db.ApplicationUser.FirstOrDefaultAsync(u => u.Id == claims.Value);
 
             return View(userFromDb);

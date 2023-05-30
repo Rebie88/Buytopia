@@ -19,15 +19,15 @@ namespace Buytopia.Areas.Customer.Controllers
     public class CartController : Controller
     {
         private readonly ApplicationDbContext _db;
-       
+       private readonly IEmailSender _emailSender;
 
         [BindProperty]
         public OrderDetailsCart detailCart { get; set; }
 
-        public CartController(ApplicationDbContext db)
+        public CartController(ApplicationDbContext db, IEmailSender emailSender)
         {
             _db = db;
-           
+            _emailSender = emailSender;
         }
         public async Task<IActionResult> Index()
         {
@@ -45,6 +45,7 @@ namespace Buytopia.Areas.Customer.Controllers
             {
                 detailCart.listCart = cart.ToList();
             }
+    
 
             foreach (var list in detailCart.listCart)
             {
@@ -67,6 +68,11 @@ namespace Buytopia.Areas.Customer.Controllers
 
 
             return View(detailCart);
+        }
+        public IActionResult ZroCart()
+        {
+            
+            return View();
         }
 
         public async Task<IActionResult> OrderSummary()
@@ -190,6 +196,11 @@ namespace Buytopia.Areas.Customer.Controllers
 
             if (charge.Status.ToLower() == "succeeded")
             {
+                //email for successful order
+                //Email logic to notify user that order is successful placed  
+                await _emailSender.SendEmailAsync(_db.Users.Where(u => u.Id == claim.Value).FirstOrDefault().Email, "Your Buytopia.com #" + detailCart.OrderHeader.Id.ToString(), "Order has been placed successfully.");
+
+
                 detailCart.OrderHeader.PaymentStatus = SF.PaymentStatusApproved;
                 detailCart.OrderHeader.Status = SF.StatusSubmitted;
             }

@@ -83,7 +83,7 @@ body {
 }
 
 .x {
-    width: 200px;
+    width: 300px;
 }
 
 .has-search .form-control {
@@ -235,6 +235,7 @@ body {
     background-color: #232f3e;
     color: white;
     font-size: 0.7em;
+    margin-top:0px;
 }
 
     .footer-wrapper ul {
@@ -293,8 +294,8 @@ body {
 .footer-wrapper ul li {
     padding: 4px 0;
 }
-
 .footer-links-terms ul li {
+    margin-left: auto;
     padding: 0 10px;
     border-right: 1px solid #d2d2d7;
 }
@@ -339,6 +340,18 @@ body {
         .footer-links-wrapper h3.addXToClose:after {
             transform: rotate(45deg) scale(1.2);
         }
+
+    /*contact*/
+    .content-area {
+        margin-left: auto;
+        margin-right: auto;
+        max-width: 300px;
+        
+    }
+    .baner {
+        height: 150px;
+    }
+    
 }
 
 @media (min-width: 768px) {
@@ -352,6 +365,11 @@ body {
     .my-apple-wrapper {
         border-bottom: 1px solid #d2d2d7;
     }
+
+    .baner {
+        height: 300px;
+    }
+   
 }
 
 @media (min-width: 992px) {
@@ -368,6 +386,10 @@ body {
     .footer-links-terms {
         margin-top: 10px;
     }
+    .footer-links-terms ul li {
+        padding: 0 10px;
+        border-right: 1px solid #d2d2d7;
+    }
 }
 
 
@@ -378,7 +400,7 @@ body {
 }
 
     .footer ul a {
-        color: #515154;
+        color: #d2d2d7;
     }
 
 /*=== 6.2 Back to Top ===*/
@@ -419,4 +441,51 @@ body {
     #back-to-top {
         z-index: 1029;
     }
+}
+
+
+#contact {
+    background-image: url("~/images/bg2.png") !important;
+}
+
+
+.content-area {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 980px;
+    padding: 5px;
+}
+
+.header-bg {
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    text-align: center;
+    z-index: -1;
+}
+
+.memoji {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 200px;
+    
+}
+
+.lobby-landing .lobby-top-section {
+    z-index: 2;
+    position: relative;
+    max-width: 100%;
+    min-height: calc(max(19.4rem, 330px));
+    background-color: #1d1d1f;
+    color: white;
+    margin-bottom:0px;
+    overflow:hidden;
+}
+
+.notfound{
+    height: 400px;
+}
+.emptyCart {
+    height: 400px;
 }

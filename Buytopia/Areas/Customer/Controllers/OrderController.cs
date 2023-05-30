@@ -115,6 +115,9 @@ namespace Buytopia.Areas.Customer.Controllers
             OrderHeader orderHeader = await _db.OrderHeader.FindAsync(OrderId);
             orderHeader.Status = SF.StatusInProcess;
             await _db.SaveChangesAsync();
+            //Email logic to notify user that order is ready for shipped
+            await _emailSender.SendEmailAsync(_db.Users.Where(u => u.Id == orderHeader.UserId).FirstOrDefault().Email, "Your Buytopia.com #" + orderHeader.Id.ToString(), "Order is Shipped.");
+
             return RedirectToAction("ManageOrder", "Order");
         }
 
@@ -125,9 +128,8 @@ namespace Buytopia.Areas.Customer.Controllers
             orderHeader.Status = SF.StatusShipped;
             await _db.SaveChangesAsync();
 
-            //Email logic to notify user that order is ready for shipped
-            //await _emailSender.SendEmailAsync(_db.Users.Where(u => u.Id == orderHeader.UserId).FirstOrDefault().Email, "Spice - Order Ready for Pickup " + orderHeader.Id.ToString(), "Order is ready for pickup.");
-
+            //Email logic to notify user that Order Out for delivery
+            await _emailSender.SendEmailAsync(_db.Users.Where(u => u.Id == orderHeader.UserId).FirstOrDefault().Email, "Your Buytopia.com #" + orderHeader.Id.ToString(), "Order is Out for delivery.");
 
             return RedirectToAction("ManageOrder", "Order");
         }
@@ -139,49 +141,13 @@ namespace Buytopia.Areas.Customer.Controllers
             OrderHeader orderHeader = await _db.OrderHeader.FindAsync(OrderId);
             orderHeader.Status = SF.StatusCancelled;
             await _db.SaveChangesAsync();
-            //await _emailSender.SendEmailAsync(_db.Users.Where(u => u.Id == orderHeader.UserId).FirstOrDefault().Email, "Buytopia - Order Cancelled " + orderHeader.Id.ToString(), "Order has been cancelled successfully.");
+            await _emailSender.SendEmailAsync(_db.Users.Where(u => u.Id == orderHeader.UserId).FirstOrDefault().Email, "Your Buytopia.com #" + orderHeader.Id.ToString(), "Order has been cancelled successfully.");
 
             return RedirectToAction("ManageOrder", "Order");
         }
-        //[Authorize]
-        //[Authorize(Roles = SF.ManagerUser)]
-        //public async Task<IActionResult> OrderDelivery()
-        //{
-        //    List<OrderDetailsViewModel> orderDetailsVM = new List<OrderDetailsViewModel>();
-
-        //    List<OrderHeader> OrderHeaderList = await _db.OrderHeader.Where(o => o.Status == SF.StatusSubmitted || o.Status == SF.StatusInProcess).ToListAsync();
-
-
-        //    foreach (OrderHeader item in OrderHeaderList)
-        //    {
-        //        OrderDetailsViewModel individual = new OrderDetailsViewModel
-        //        {
-        //            OrderHeader = item,
-        //            OrderDetails = await _db.OrderDetails.Where(o => o.OrderId == item.Id).ToListAsync()
-        //        };
-        //        orderDetailsVM.Add(individual);
-        //    }
-
-
-
-        //    return View(orderDetailsVM.ToList());
-        //}
-
-        //[Authorize(Roles =  SF.ManagerUser)]
-        //[HttpPost]
-        //[ActionName("OrderDelivery")]
-        //[Authorize]
-        //public async Task<IActionResult> OrderDeliveryPost(int OrderId)
-        //{
-        //    OrderHeader orderHeader = await _db.OrderHeader.FindAsync(OrderId);
-        //    orderHeader.Status = SF.StatusDelivered;
-        //    await _db.SaveChangesAsync();
-        //    return RedirectToAction("OrderDelivery", "Order");
-        //}
+        
         public async Task<IActionResult> OrderDelivery(int productPage = 1)
         {
-            //var claimsIdentity = (ClaimsIdentity)User.Identity;
-            //var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
             List<OrderDetailsViewModel> orderList = new List<OrderDetailsViewModel>();
             List<OrderHeader> orderHeaderList = await _db.OrderHeader.Include(o => o.ApplicationUser).Where(u => u.Status== SF.StatusShipped).ToListAsync();
 
@@ -191,6 +157,7 @@ namespace Buytopia.Areas.Customer.Controllers
                 {
                     OrderHeader = item,
                     OrderDetails = await _db.OrderDetails.Where(o => o.OrderId == item.Id).ToListAsync(),
+
                 };
                 orderList.Add(individual);
             }
@@ -203,9 +170,16 @@ namespace Buytopia.Areas.Customer.Controllers
         [Authorize]
         public async Task<IActionResult> OrderDeliveryPost(int OrderId)
         {
+            
             OrderHeader orderHeader = await _db.OrderHeader.FindAsync(OrderId);
             orderHeader.Status = SF.StatusDelivered;
             await _db.SaveChangesAsync();
+
+           
+            //Email logic to notify user that order is delivered
+            await _emailSender.SendEmailAsync(_db.Users.Where(u => u.Id == orderHeader.UserId).FirstOrDefault().Email, "Your Buytopia.com #" + orderHeader.Id.ToString(), "Your Order is delivered.");
+
+
             return RedirectToAction("OrderDelivery", "Order");
         }
 
