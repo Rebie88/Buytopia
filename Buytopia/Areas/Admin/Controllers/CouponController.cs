@@ -21,6 +21,7 @@ namespace Buytopia.Areas.Admin.Controllers
         }
         public async Task<IActionResult> Index()
         {
+            // Retrieve all the coupons and pass to the view
             return View(await _db.Coupon.ToListAsync());
         }
         public IActionResult Create()
@@ -33,6 +34,7 @@ namespace Buytopia.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
+                //save the image to database
                 var files = HttpContext.Request.Form.Files;
                 if (files.Count > 0)
                 {
@@ -80,7 +82,7 @@ namespace Buytopia.Areas.Admin.Controllers
             }
 
             var couponFromDb = await _db.Coupon.Where(c => c.Id == coupons.Id).FirstOrDefaultAsync();
-
+             
             if (ModelState.IsValid)
             {
                 var files = HttpContext.Request.Form.Files;

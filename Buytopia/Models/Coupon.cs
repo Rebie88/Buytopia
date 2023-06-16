@@ -17,7 +17,7 @@ namespace Buytopia.Models
 
         [Required]
         public double MinimumAmount { get; set; }   
-
+        //image saved on database not on server so byte
         public byte[] Picture { get; set; }
         public bool IsActive { get; set; }  
     }

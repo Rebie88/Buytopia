@@ -45,7 +45,6 @@ namespace Buytopia.Areas.Customer.Controllers
             {
                 detailCart.listCart = cart.ToList();
             }
-    
 
             foreach (var list in detailCart.listCart)
             {

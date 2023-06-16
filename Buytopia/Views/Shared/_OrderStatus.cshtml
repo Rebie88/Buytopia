@@ -4,23 +4,23 @@
   
     @if (Model == SF.StatusSubmitted)
     {
-        <h3 class="text-success">Order placed, thanks!</h3>
+        <h3 class="text-success"><i class="fa-solid fa-check-circle" style="color: #56a745;"></i> Order placed, thanks!</h3>
         <p>Confirmation will be sent to your email.</p>
         <img src="~/images/OrderPlaced.png" width="100%" />
     }
     @if (Model == SF.StatusInProcess)
     {
-        <h3 class="text-success">Your order is Shipped will delivered soon</h3>
+        <h3 class="text-success"><i class="fa-solid fa-check-circle" style="color: #56a745;"></i> Your order is Shipped will delivered soon</h3>
         <img src="~/images/Shipped.png" width="100%" />
     }
     @if (Model == SF.StatusShipped)
     {
-        <h3 class="text-success">Your order is out for delivery arives soon</h3>
+        <h3 class="text-success"><i class="fa-solid fa-check-circle" style="color: #56a745;"></i> Your order is out for delivery arives soon</h3>
         <img src="~/images/OutForDelivery.png" width="100%" />
     }
     @if (Model == SF.StatusDelivered)
     {
-        <h3 class="text-success">Your order is delivered</h3>
+        <h3 class="text-success"><i class="fa-solid fa-check-circle" style="color: #56a745;"></i> Your order is delivered</h3>
         <img src="~/images/Deliverd.png" width="100%" />
     }
 </div>

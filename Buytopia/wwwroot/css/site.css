@@ -83,7 +83,7 @@ body {
 }
 
 .x {
-    width: 300px;
+    width: 350px;
 }
 
 .has-search .form-control {
@@ -486,6 +486,36 @@ body {
 .notfound{
     height: 400px;
 }
-.emptyCart {
-    height: 400px;
+
+
+/*overrides  Bootstrap for disabled fields*/
+input:disabled,
+textarea:disabled,
+select:disabled {
+    background-color: white !important;
+    color: black !important;
+}
+input:read-only {
+    background-color: white !important;
+    color: black !important;
+}
+
+
+
+.social-icons {
+    display: flex;
+    justify-content:right;
+    gap: 10px;
+}
+
+.social-icons i {
+    height: 32px;
+    width: 32px;
+    color: white;
+    transition: transform 0.3s ease-in-out;
+}
+
+.social-icons i:hover {
+    color: aquamarine;
+    transform: scale(1.2);
 }

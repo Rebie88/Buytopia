@@ -10,7 +10,7 @@
 <div class="bgWhite container">
     <div class="row px-3">
         <div class="col-8">
-            <h2 class="text-success">Order Confirmed</h2>
+            <h2 class="text-success"><i class="fa-solid fa-check-circle" style="color: #56a745;"></i> Order placed, thanks!</h2>
         </div>
         <div class="col-4 text-right">
             <a asp-action="Index" asp-controller="Home" class="btn btn-success form-control">New Order</a>
@@ -20,7 +20,7 @@
     @if (Model.OrderHeader != null)
     {
         <div style="color:forestgreen" class="p-3">
-            Your order has been confirmed! Please see the order summary below.
+           Confirmtion will be sent to your email. Please see the order summary below.
             <br />
             Feel free to contact us if you have any questions.
         </div>

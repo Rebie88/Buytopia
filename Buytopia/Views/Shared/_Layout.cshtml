@@ -7,11 +7,13 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Buytopia</title>
+    <link rel="icon" href="@Url.Content("~/favicon.ico")" type="image/x-icon" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="~/css/all.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" />
+   
     <script src="https://cdn.tiny.cloud/1/952ynxuy9a5trgpmnpghgts7vx43s4tamdsiwzlzku0ga18c/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+    <link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body class="search-bg">
     <header>
@@ -40,10 +42,7 @@
                         else
                         {
                             <li style="color:white">
-                               @* <a href="#" class="nav-link">
-
-                                    <i class="fas fa-shopping-cart"></i> &nbsp; (0)
-                                </a>*@
+                           
                                 <a asp-area="Customer" asp-controller="Cart" asp-action="ZroCart" class="nav-link">
                                   
                                     <i class="fas fa-shopping-cart"></i> &nbsp; (0)
@@ -53,6 +52,18 @@
                     </ul>
 
                     <partial name="_LoginPartial" />
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+
+                            <form class="input-group" asp-controller="Home" asp-action="Filter" style="padding-right: 25px;">
+                                <input name="searchString" type="text" class="form-control" placeholder="Search Buytopia..." aria-label="Recipient's username" aria-describedby="button-addon2">
+                                <div class="input-group-append">
+                                    <button class="btn btn-secondary" style="background-color:#febd69" type="submit"><i class="fa fa-search" style="color: #333333;"></i></button>
+                                </div>
+                            </form>
+
+                        </li>
+                    </ul>
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
                             <a class="nav-link" asp-area="Customer" asp-controller="Home" asp-action="Index">Home</a>
@@ -99,17 +110,8 @@
                         }
                     
 
-
-                        <li class="nav-item">
-
-                            <form class="input-group" asp-controller="Home" asp-action="Filter" style="padding-right: 25px;">
-                                <input name="searchString" type="text" class="form-control" placeholder="Search Buytopia..." aria-label="Recipient's username" aria-describedby="button-addon2">
-                                <div class="input-group-append">
-                                <button class="btn btn-secondary" style="background-color:#febd69" type="submit"><i class="fa fa-search" style="color: #333333;"></i></button>
-                                </div>
-                            </form>
-
-                        </li>
+                       
+                       
                     </ul>
                 </div>
             </div>
@@ -193,10 +195,29 @@
                 </div>
                 
             </div>
-            <div class="my-apple-wrapper mb-4">
+            <div class="row my-apple-wrapper mb-4">
+                <div class="col-6">
                 More ways to shop: <a href="#">Find an Buytopia Store</a> or
                 <a href="#">other retailer</a> near you. Or call 1-800-MY-Buytopia.
+                </div>
+                <div class="social-icons col-4 offset-2">
+                    <a href="https://www.facebook.com" target="_blank">
+                        <i class="fa-brands fa-facebook fa-2xl"></i>
+                    </a>
+                    <a href="https://twitter.com" target="_blank">
+                        <i class="fa-brands fa-twitter fa-2xl"></i>
+                    </a>
+                  
+                    <a href="https://github.com/" target="_blank">
+                        <i class="fa-brands fa-github fa-2xl"></i>
+                    </a>
+                    <a href="https://www.linkedin.com/" target="_blank">
+                        <i class="fa-brands fa-linkedin fa-2xl"></i>
+                    </a>
+                </div>
             </div>
+            <div class="pb-5"></div>
+             
         </div>  
     </section>
     <footer class="footer text-white text-center pt-3 mb-0" style="background-color: #131a22;font-size: 14px;">

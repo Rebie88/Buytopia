@@ -50,8 +50,8 @@ namespace Buytopia
 
             services.AddAuthentication().AddFacebook(facebookOptions =>
             {
-                facebookOptions.AppId = "488426343432010";
-                facebookOptions.AppSecret = "93a45982daa1f8961708158761b2ca46";
+                facebookOptions.AppId = "250011660909377";
+                facebookOptions.AppSecret = "d951a2b444913a44fc34d2f6d86c7744";
             });
 
             services.AddAuthentication().AddGoogle(googleOptions =>
