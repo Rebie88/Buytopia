@@ -50,14 +50,14 @@ namespace Buytopia
 
             services.AddAuthentication().AddFacebook(facebookOptions =>
             {
-                facebookOptions.AppId = "250011660909377";
-                facebookOptions.AppSecret = "d951a2b444913a44fc34d2f6d86c7744";
+                facebookOptions.AppId = "";
+                facebookOptions.AppSecret = "";
             });
 
             services.AddAuthentication().AddGoogle(googleOptions =>
             {
-                googleOptions.ClientId = "552312476971-epggihrtt1nnobe7to26g8rqvru4cvid.apps.googleusercontent.com";
-                googleOptions.ClientSecret = "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";
+                googleOptions.ClientId = "";
+                googleOptions.ClientSecret = "";
             });
 
             services.ConfigureApplicationCookie(options =>
